@@ -62,9 +62,7 @@ def main(args):
 
     ################### Hyper parameters #################
     if 'hhar' in args.dataset:
-        if args.dataset == 'hhar':
-            opt = options.HHAROpt
-        elif args.dataset == 'hhar_scaled':
+        if args.dataset == 'hhar_scaled':
             opt = options.HHAROpt
     elif 'dsa' in args.dataset:
         if args.dataset == 'dsa_scaled':
