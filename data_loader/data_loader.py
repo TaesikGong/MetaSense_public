@@ -132,14 +132,12 @@ def domain_data_loader(args, domains, file_path, batch_size, train_max_rows=np.i
             if separate_domains:
                 for train_data in HHARDataset(file=file_path, model=options[0], device=options[1], user=options[2],
                                               complementary=True if domains == [
-                                                  'rest'] else False,
-                                              get_calculated_feature=True if args.dataset == 'hhar_scaled_feature' else False).get_datasets_per_domain():
+                                                  'rest'] else False).get_datasets_per_domain():
                     entire_datasets.append(train_data)
 
             else:
                 train_data = HHARDataset(file=file_path, model=options[0], device=options[1], user=options[2],
-                                         complementary=True if domains == ['rest'] else False,
-                                         get_calculated_feature=True if args.dataset == 'hhar_scaled_feature' else False)
+                                         complementary=True if domains == ['rest'] else False)
                 if len(train_data) == 0:
                     print('Zero train data: {:s}'.format(domain))
                     continue
@@ -244,7 +242,7 @@ def domain_data_loader(args, domains, file_path, batch_size, train_max_rows=np.i
 
         return data_loaders
     else:
-        train_data_loader = datasets_to_dataloader(train_datasets, batch_size=batch_size, concat=True, drop_last=True) #TODO: identify why drop_last
+        train_data_loader = datasets_to_dataloader(train_datasets, batch_size=batch_size, concat=True, drop_last=True) #Drop_last for avoding one-sized minibatches for batchnorm layers
         valid_data_loader = datasets_to_dataloader(valid_datasets, batch_size=batch_size, concat=True)
         test_data_loader = datasets_to_dataloader(test_datasets, batch_size=batch_size, concat=True)
 
