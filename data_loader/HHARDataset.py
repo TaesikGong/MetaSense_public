@@ -60,7 +60,7 @@ class KSHOTTensorDataset(torch.utils.data.Dataset):
 class HHARDataset(torch.utils.data.Dataset):
     # load static files
 
-    def __init__(self, file, transform=None, model=None, device=None, user=None, gt=None, complementary=False, get_calculated_feature=False):
+    def __init__(self, file, transform=None, model=None, device=None, user=None, gt=None, complementary=False):
         """
         Args:
             file_path (string): Path to the csv file with annotations.

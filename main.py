@@ -66,25 +66,17 @@ def main(args):
             opt = options.HHAROpt
         elif args.dataset == 'hhar_scaled':
             opt = options.HHAROpt
-        elif args.dataset == 'hhar_scaled_feature':
-            opt = options.HHAR_feature_Opt
     elif 'dsa' in args.dataset:
         if args.dataset == 'dsa_scaled':
             opt = options.DSAOpt
-        elif args.dataset == 'dsa_scaled_feature':
-            opt = options.DSA_feature_Opt
     elif 'metasense_activity' in args.dataset:
         if args.dataset == 'metasense_activity_scaled':
             opt = options.MetaSense_ActivityOpt
-        elif args.dataset == 'metasense_activity_scaled_feature':
-            opt = options.MetaSense_Activity_feature_Opt
     elif 'metasense_speech' in args.dataset:
         if args.dataset == 'metasense_speech_scaled':
             opt = options.MetaSense_SpeechOpt
             if args.method in ['Src', 'Tgt', 'Src_Tgt', 'TrC']: #prevent high fluctuation for non-meta learning method
                 opt['learning_rate'] = opt['learning_rate']*0.1
-        elif args.dataset == 'metasense_speech_scaled_feature':
-            opt = options.MetaSense_Speech_feature_Opt
 
 
     model = None
