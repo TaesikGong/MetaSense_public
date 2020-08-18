@@ -35,6 +35,9 @@ class MAML():
 
         self.target_support_set = next(iter(target_dataloader['train']))
 
+        self.iters_spt = [iter(self.source_dataloaders[i]['train']) for i in range(len(self.source_dataloaders))]
+        self.iters_qry = [iter(self.source_dataloaders[i]['test']) for i in range(len(self.source_dataloaders))]
+
         # init self.optimizer
         self.optimizer = optim.Adam([{'params': self.net.parameters()}], lr=self.meta_lr,
                                     weight_decay=opt['weight_decay'])
@@ -114,11 +117,25 @@ class MAML():
             query_set_from_domains = []
             weights_per_domain = []
 
-            for domain_i, domain_loader in enumerate(self.source_dataloaders): # for each task
-                support_set_from_domains.append(next(iter(domain_loader['train'])))
-                query_set_from_domains.append(next(iter(domain_loader['test'])))
+            for domain_i in range(len(self.source_dataloaders)): # for each task
 
-                for _ in range(len(domain_loader['train'])): # append domain_i as many as the number of the domain data
+                try:
+                    train_batch_i = next(self.iters_spt[domain_i])
+                except StopIteration:
+                    self.iters_spt[domain_i] = iter(self.source_dataloaders[domain_i]['train'])
+                    train_batch_i = next(self.iters_spt[domain_i])
+
+                try:
+                    test_batch_i = next(self.iters_qry[domain_i])
+                except StopIteration:
+                    self.iters_qry[domain_i] = iter(self.source_dataloaders[domain_i]['test'])
+                    test_batch_i = next(self.iters_qry[domain_i])
+
+
+                support_set_from_domains.append(train_batch_i)
+                query_set_from_domains.append(test_batch_i)
+
+                for _ in range(len(self.source_dataloaders[domain_i]['train'])): # append domain_i as many as the number of the domain data
                     weights_per_domain.append(domain_i)
 
             synthetic_supports = [] # list of (K shot x Num classes x dim1 x dim2, Kshot x NC, K shot x NC)

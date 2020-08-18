@@ -38,6 +38,10 @@ class MetaSense():
 
 
         self.target_support_set = next(iter(target_dataloader['train']))
+
+        self.iters_spt = [iter(self.source_dataloaders[i]['train']) for i in range(len(self.source_dataloaders))]
+        self.iters_qry = [iter(self.source_dataloaders[i]['test']) for i in range(len(self.source_dataloaders))]
+
         # init self.optimizer
         self.optimizer = optim.Adam([{'params': self.net.parameters()}], lr=self.meta_lr,
                                     weight_decay=opt['weight_decay'])
@@ -120,9 +124,23 @@ class MetaSense():
             support_set_from_domains = []
             query_set_from_domains = []
 
-            for domain_loader in self.source_dataloaders:  # for each task
-                support_set_from_domains.append(next(iter(domain_loader['train'])))
-                query_set_from_domains.append(next(iter(domain_loader['test'])))
+            for domain_i in range(len(self.source_dataloaders)):  # for each task
+
+                try:
+                    train_batch_i = next(self.iters_spt[domain_i])
+                except StopIteration:
+                    self.iters_spt[domain_i] = iter(self.source_dataloaders[domain_i]['train'])
+                    train_batch_i = next(self.iters_spt[domain_i])
+
+                try:
+                    test_batch_i = next(self.iters_qry[domain_i])
+                except StopIteration:
+                    self.iters_qry[domain_i] = iter(self.source_dataloaders[domain_i]['test'])
+                    test_batch_i = next(self.iters_qry[domain_i])
+
+
+                support_set_from_domains.append(train_batch_i)
+                query_set_from_domains.append(test_batch_i)
 
             synthetic_supports = []  # list of (K shot x Num classes x dim1 x dim2, Kshot x NC, K shot x NC)
             synthetic_queries = []
@@ -203,10 +221,22 @@ class MetaSense():
         for task_i in range(num_task):  # for each task
 
             if task_i < len(self.source_dataloaders): # per-condition tasks
+                domain_i = task_i
+                try:
+                    train_batch_i = next(self.iters_spt[domain_i])
+                except StopIteration:
+                    self.iters_spt[domain_i] = iter(self.source_dataloaders[domain_i]['train'])
+                    train_batch_i = next(self.iters_spt[domain_i])
 
-                support_batch = next(iter(self.source_dataloaders[task_i][
-                                              'train']))  # this is different for every iteration and epoch (thanks to shuffle?).
-                query_batch = next(iter(self.source_dataloaders[task_i]['test']))
+                try:
+                    test_batch_i = next(self.iters_qry[domain_i])
+                except StopIteration:
+                    self.iters_qry[domain_i] = iter(self.source_dataloaders[domain_i]['test'])
+                    test_batch_i = next(self.iters_qry[domain_i])
+
+
+                support_batch = train_batch_i
+                query_batch = test_batch_i
             else: # multi-conditioned tasks
                 support_batch = synthetic_supports[task_i - len(self.source_dataloaders)]
                 query_batch = synthetic_queries[task_i - len(self.source_dataloaders)]
