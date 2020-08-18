@@ -359,10 +359,8 @@ class PN():
         Test the performance of the model
         """
         class_accuracy_of_test_data = []
-        loss = []
         for i in range(10):
             accuracy_for_shot, loss_fot_shot = self.evaluation(epoch, 'test', nshot= i + 1)
             class_accuracy_of_test_data.append(accuracy_for_shot)
-            loss.append(accuracy_for_shot)
 
         return class_accuracy_of_test_data
