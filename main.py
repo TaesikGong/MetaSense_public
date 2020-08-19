@@ -313,7 +313,7 @@ def main(args):
 
         if args.load_checkpoint_path: # False if args.load_checkpoint_path==''
             resume = args.load_checkpoint_path + 'cp_best.pth.tar'
-            if 'TrC' in args.method in args.method:
+            if 'TrC' in args.method:
                 learner.load_checkpoint(resume, True)
             else:
                 learner.load_checkpoint(resume)
