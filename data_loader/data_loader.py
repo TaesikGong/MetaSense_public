@@ -61,7 +61,7 @@ def datasets_to_dataloader(datasets, batch_size, concat=True, num_workers=8, shu
 
 
 def domain_data_loader(args, domains, file_path, batch_size, train_max_rows=np.inf, valid_max_rows=np.inf,
-                       test_max_rows=np.inf, valid_split=0.1, test_split=0.1, separate_domains=False):
+                       test_max_rows=np.inf, valid_split=0.1, test_split=0.1, separate_domains=False, is_src=True):
     entire_datasets = []
     train_datasets = []
     valid_datasets = []
@@ -221,13 +221,16 @@ def domain_data_loader(args, domains, file_path, batch_size, train_max_rows=np.i
 
     if separate_domains:
         # actual batch size is multiplied by num_class
-        train_data_loaders = datasets_to_dataloader(train_datasets, batch_size=batch_size, concat=False)
+        train_data_loaders = datasets_to_dataloader(train_datasets, batch_size=batch_size, concat=False, drop_last=True)
         # if 'PN' in args.method:
         #     test_batch_size = 5
         # else:
         valid_data_loaders = datasets_to_dataloader(valid_datasets, batch_size=32,
                                                     concat=False)  # set validation batch_size = 32 to boost validation speed
-        test_data_loaders = datasets_to_dataloader(test_datasets, batch_size=batch_size, concat=False)
+        if is_src:
+            test_data_loaders = datasets_to_dataloader(test_datasets, batch_size=batch_size, concat=False, drop_last=True)
+        else:
+            test_data_loaders = datasets_to_dataloader(test_datasets, batch_size=batch_size, concat=False, drop_last=False)
         # assert (len(train_data_loaders) == len(valid_data_loaders) == len(test_data_loaders))
         data_loaders = []
         for i in range(len(train_data_loaders)):

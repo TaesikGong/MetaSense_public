@@ -116,20 +116,20 @@ def main(args):
                                                                 batch_size=opt['batch_size'],
                                                                 valid_split=0.2,
                                                                 test_split=0.2,
-                                                                separate_domains=False)
+                                                                separate_domains=False, is_src=True)
         else:
             source_data_loader = data_loader.domain_data_loader(args, args.src, opt['file_path'],
                                                             batch_size=opt['batch_size'],
                                                             valid_split=0,
                                                             test_split=0,
-                                                            separate_domains=False)
+                                                            separate_domains=False, is_src=True)
 
         print('##############Target Data Loading...##############')
         target_data_loader = data_loader.domain_data_loader(args, args.tgt, opt['file_path'],
                                                             batch_size=args.nshot,
                                                             valid_split=0.2,
                                                             test_split=0.2,
-                                                            separate_domains=True)
+                                                            separate_domains=True, is_src=False)
         if args.src == ['all']:
             temp_source_data_loader, target_data_loader = data_loader.support_query_data_loader(
                 target_data_loader=target_data_loader,
@@ -156,7 +156,7 @@ def main(args):
                                                             batch_size=args.nshot,
                                                             valid_split=0.2,
                                                             test_split=0.2,
-                                                            separate_domains=True)
+                                                            separate_domains=True, is_src=False)
 
         assert(args.src != ['all']) # Tgt does not have any source
 
@@ -171,14 +171,14 @@ def main(args):
                                                             batch_size=opt['batch_size'],
                                                             valid_split=0,
                                                             test_split=0,
-                                                            separate_domains=False)
+                                                            separate_domains=False, is_src=True)
 
         print('##############Target Data Loading...##############')
         target_data_loader = data_loader.domain_data_loader(args, args.tgt, opt['file_path'],
                                                             batch_size=args.nshot,
                                                             valid_split=0.2,
                                                             test_split=0.2,
-                                                            separate_domains=True)
+                                                            separate_domains=True, is_src=False)
         if args.src == ['all']:
             temp_source_data_loader, target_data_loader = data_loader.support_query_data_loader(
                 target_data_loader=target_data_loader,
@@ -207,7 +207,7 @@ def main(args):
                                                             batch_size=args.nshot,
                                                             valid_split=0.2,
                                                             test_split=0.2,
-                                                            separate_domains=True)
+                                                            separate_domains=True, is_src=False)
 
         # for args.src==['all'] case, TrC will load the checkpoint of SrC trained with 'all' data. No further actions required.
 
@@ -222,14 +222,14 @@ def main(args):
                                                             batch_size=args.nshot,
                                                             valid_split=0,
                                                             test_split=0.5,
-                                                            separate_domains=True)
+                                                            separate_domains=True, is_src=True)
 
         print('##############Target Data Loading...##############')
         target_data_loader = data_loader.domain_data_loader(args, args.tgt, opt['file_path'],
                                                             batch_size=10,
                                                             valid_split=0.2,
                                                             test_split=0.2,
-                                                            separate_domains=True)
+                                                            separate_domains=True, is_src=False)
         if args.src == ['all']:
             temp_source_data_loader, target_data_loader = data_loader.support_query_data_loader(
                 target_data_loader=target_data_loader,
@@ -250,14 +250,14 @@ def main(args):
                                                             batch_size=args.nshot,
                                                             valid_split=0,
                                                             test_split=0.5,
-                                                            separate_domains=True)
+                                                            separate_domains=True, is_src=True)
 
         print('##############Target Data Loading...##############')
         target_data_loader = data_loader.domain_data_loader(args, args.tgt, opt['file_path'],
                                                             batch_size=10,
                                                             valid_split=0.2,
                                                             test_split=0.2,
-                                                            separate_domains=True)
+                                                            separate_domains=True, is_src=False)
         if args.src == ['all']:
             temp_source_data_loader, target_data_loader = data_loader.support_query_data_loader(
                 target_data_loader=target_data_loader,
@@ -277,14 +277,14 @@ def main(args):
                                                             batch_size=args.nshot,
                                                             valid_split=0,
                                                             test_split=0.5,
-                                                            separate_domains=True)
+                                                            separate_domains=True, is_src=True)
 
         print('##############Target Data Loading...##############')
         target_data_loader = data_loader.domain_data_loader(args, args.tgt, opt['file_path'],
                                                             batch_size=10,
                                                             valid_split=0.2,
                                                             test_split=0.2,
-                                                            separate_domains=True)
+                                                            separate_domains=True, is_src=False)
         if args.src == ['all']:
             temp_source_data_loader, target_data_loader = data_loader.support_query_data_loader(
                 target_data_loader=target_data_loader,
