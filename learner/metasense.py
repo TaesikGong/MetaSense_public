@@ -167,9 +167,10 @@ class MetaSense():
                     feature, class_label, domain_label = support_set_from_domains[domain_id]
 
                     # select class dimension
-                    feature = torch.index_select(feature, 1, class_id)
-                    class_label = torch.index_select(class_label, 1, class_id)
-                    domain_label = torch.index_select(domain_label, 1, class_id)
+                    indices = class_label == class_id
+                    feature = feature[indices].view(feature.shape[0],1,*feature.shape[2:])
+                    class_label = class_label[indices].view(-1,1)
+                    domain_label = domain_label[indices].view(-1,1)
 
                     tmp_spt_feat = torch.cat((tmp_spt_feat, feature), dim=1)
                     tmp_spt_cl = torch.cat((tmp_spt_cl, class_label), dim=1)
@@ -179,9 +180,10 @@ class MetaSense():
                     feature, class_label, domain_label = query_set_from_domains[domain_id]
 
                     # select class dimension
-                    feature = torch.index_select(feature, 1, class_id)
-                    class_label = torch.index_select(class_label, 1, class_id)
-                    domain_label = torch.index_select(domain_label, 1, class_id)
+                    indices = class_label == class_id
+                    feature = feature[indices].view(feature.shape[0],1,*feature.shape[2:])
+                    class_label = class_label[indices].view(-1,1)
+                    domain_label = domain_label[indices].view(-1,1)
 
                     tmp_qry_feat = torch.cat((tmp_qry_feat, feature), dim=1)
                     tmp_qry_cl = torch.cat((tmp_qry_cl, class_label), dim=1)
