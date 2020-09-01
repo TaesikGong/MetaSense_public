@@ -184,7 +184,7 @@ class MAML():
                     tmp_qry_cl = torch.cat((tmp_qry_cl, class_label), dim=1)
                     tmp_qry_dl = torch.cat((tmp_qry_dl, domain_label), dim=1)
 
-                synthetic_supports.append([tmp_spt_feat, tmp_spt_cl, tmp_qry_dl])
+                synthetic_supports.append([tmp_spt_feat, tmp_spt_cl, tmp_spt_dl])
                 synthetic_queries.append([tmp_qry_feat, tmp_qry_cl, tmp_qry_dl])
 
         return synthetic_supports, synthetic_queries
