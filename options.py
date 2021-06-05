@@ -5,7 +5,7 @@ MetaSense_ActivityOpt = {
     'batch_size_target': 8,
     'seq_len': 256,
     'ecdf_bin_size': 50,
-    'file_path': './dataset/metasense_activity_minmax_scaling_all.csv',
+    'file_path': './dataset/ichar_minmax_scaling_all.csv',
 
     'input_dim': 6,
     'learning_rate': 0.0001,
@@ -58,7 +58,7 @@ MetaSense_SpeechOpt = {
     'batch_size': 64,
     'batch_size_target': 8,
     'seq_len': 32000,
-    'file_path': './dataset/metasense_speech_minmax_scaling_all.csv',
+    'file_path': './dataset/icsr_minmax_scaling_all.csv',
     'input_dim': 1,
     'learning_rate': 0.001,
     'weight_decay': 0.001,

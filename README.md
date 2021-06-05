@@ -34,16 +34,21 @@ Reference: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manag
 
 ## Datasets
 We used four datasets:
-* MetaSense Activity Recognition
-* MetaSense Speech Recognition
+* Individual-Condition Human Activity Recognition (ICHAR) - *ours*
+* Individual-Condition Speech Recognition (ICSR) - *ours*
 * Heterogeneity Human Activity Recognition ([HHAR](https://archive.ics.uci.edu/ml/datasets/Heterogeneity+Activity+Recognition))
 * Daily and Sports Activities ([DSA](https://archive.ics.uci.edu/ml/datasets/Daily+and+Sports+Activities))
 
 We organized DSA and HHAR datasets and preprocessed data (e.g., min-max normalization) for our convenience. For details, please refer to our paper.
 
 ### Download Datasets
-We provide our preprocessed datasets:
-[ [MetaSense Activity Recognition](https://drive.google.com/file/d/11JvxtXRFTbXZUcCYlvcrA07LoBUo0yLj/view?usp=sharing) ] [ [MetaSense Speech Recognition](https://drive.google.com/file/d/14SB5d7DAxpbv1r2U3dGr9zn86NOQTmFd/view?usp=sharing) ] [ [HHAR](https://drive.google.com/file/d/13UgAEIeULAmLs9nDqnYBYEg8qq5tuZmQ/view?usp=sharing) ] [ [DSA](https://drive.google.com/file/d/17GHljnCzAG9xR3kjUpIV13KtIvwb7lM_/view?usp=sharing) ] 
+We provide our preprocessed datasets in a csv format [[here](https://drive.google.com/drive/folders/1Fu6KItvxJ2z-gB8PKpuzB7N6gX8Wo0NB?usp=sharing)]
+* ichar_minmax_scaling_all.csv: minmax-scaled (0-1) ICHAR dataset used in our experiment  
+* icsr_minmax_scaling_all.csv: minmax-scaled (0-1) ICSR dataset used in our experiment
+* hhar_minmax_scaling_all.csv: minmax-scaled (0-1) HHAR dataset used in our experiment
+* dsa_minmax_scaling_all.csv: minmax-scaled (0-1) DSA dataset used in our experiment
+* ichar_original_all.csv: ICHAR dataset before scaling (for different purposes)
+* icsr_original_all.csv: ICSR dataset before scaling (for different purposes)
 
 To run our codes, you first need to download at least one of the datasets. After that, make a directory for the datasets:
 
